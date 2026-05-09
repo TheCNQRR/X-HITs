@@ -1,7 +1,11 @@
 package com.example.auth.presentation.signin
 
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,8 +22,11 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
@@ -34,10 +41,28 @@ import com.example.auth.R
 import com.example.auth.presentation.signin.theme.InterFontFamily
 import com.example.core.ui.effects.CustomButton
 
+private const val ANIMATION_DURATION = 100
+
 @Composable
 fun SignInScreen() {
     val emailState = rememberTextFieldState()
     val passwordState = rememberTextFieldState()
+
+    val interactionSource = remember { MutableInteractionSource() }
+    val isPressed by interactionSource.collectIsPressedAsState()
+
+    val alpha by animateFloatAsState(
+        targetValue = if (isPressed) 0.5f else 1f,
+        animationSpec = tween(ANIMATION_DURATION)
+    )
+
+    val forgotInteractionSource = remember { MutableInteractionSource() }
+    val isForgotPressed by forgotInteractionSource.collectIsPressedAsState()
+
+    val forgotAlpha by animateFloatAsState(
+        targetValue = if (isForgotPressed) 0.2f else 0.5f,
+        animationSpec = tween(ANIMATION_DURATION)
+    )
 
     Box(
         modifier = Modifier
@@ -96,15 +121,18 @@ fun SignInScreen() {
             Text(
                 modifier = Modifier
                     .padding(top = 10.dp, end = 32.dp)
-                    .align(Alignment.End),
+                    .align(Alignment.End)
+                    .clickable(
+                        interactionSource = forgotInteractionSource,
+                        indication = null
+                    ) { },
                 text = stringResource(R.string.forgot_password),
                 fontSize = 16.sp,
                 fontFamily = InterFontFamily,
                 fontWeight = FontWeight.Normal,
-                color = Color.White.copy(alpha = 0.5f)
+                color = Color.White.copy(alpha = forgotAlpha)
             )
         }
-
 
         Box(
             modifier = Modifier
@@ -142,9 +170,11 @@ fun SignInScreen() {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(32.dp)
                     .padding(start = 70.dp, end = 70.dp)
-                    .clickable {  },
+                    .clickable(
+                        interactionSource = interactionSource,
+                        indication = null
+                    ) { },
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -153,12 +183,15 @@ fun SignInScreen() {
                         .size(32.dp),
                     painter = painterResource(R.drawable.ic_google),
                     contentDescription = stringResource(R.string.google_icon),
-                    contentScale = ContentScale.Crop
+                    contentScale = ContentScale.Crop,
+                    alpha = alpha
                 )
 
                 Spacer(modifier = Modifier.width(14.dp))
 
                 Text(
+                    modifier = Modifier
+                        .alpha(alpha),
                     text = stringResource(R.string.continue_with_google),
                     fontSize = 20.sp,
                     fontFamily = InterFontFamily,

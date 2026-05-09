@@ -27,11 +27,11 @@ import com.example.auth.presentation.signin.theme.InterFontFamily
 
 @Composable
 fun AuthTextField(
-    modifier: Modifier = Modifier,
     state: TextFieldState,
     keyboardOptions: KeyboardOptions,
     placeholder: String,
     leadingIcon: Painter,
+    modifier: Modifier = Modifier,
     trailingIcon: @Composable (() -> Unit)? = null
 ) {
     OutlinedTextField(
