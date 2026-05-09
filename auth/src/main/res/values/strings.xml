@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="background">Задний фон</string>
+    <string name="login">Вход</string>
+    <string name="login_to_continue">Войдите, чтобы продолжить</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="forgot_password">Забыли пароль?</string>
+    <string name="continue_with_google">Продолжить с Google</string>
+    <string name="google_icon">Иконка Google</string>
+</resources>
