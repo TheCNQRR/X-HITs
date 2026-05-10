@@ -1,4 +1,4 @@
-package com.example.auth.presentation.signin
+package com.example.auth.presentation.common
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth

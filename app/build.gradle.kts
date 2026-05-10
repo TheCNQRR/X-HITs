@@ -1,8 +1,10 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.dagger.hilt.android)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -34,23 +36,32 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "17"
     }
 }
 
 dependencies {
+
     implementation(projects.auth)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
+    implementation(libs.lifecycle.viewmodel.compose)
     implementation(libs.material)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.material3.android)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.activity)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.retrofit2)
+    implementation(libs.gson)
+    implementation(libs.kotlin.serializationJson)
+    implementation(libs.kotlin.serializationCore)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.constraintlayout)
     testImplementation(libs.junit)
