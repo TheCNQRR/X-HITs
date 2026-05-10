@@ -5,9 +5,10 @@ import com.example.auth.data.model.ExchangeCodeRequest
 import com.example.auth.domain.repository.AuthRepository
 import javax.inject.Inject
 
+@Suppress("TooGenericExceptionThrown")
 class AuthRepositoryImpl @Inject constructor(
     private val api: AuthApi
-): AuthRepository {
+) : AuthRepository {
 
     override suspend fun startGoogleAuth(): String {
         val response = api.getGoogleOAuthUri()

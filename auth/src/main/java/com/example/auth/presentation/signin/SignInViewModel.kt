@@ -14,7 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SignInViewModel @Inject constructor(
     private val authRepository: AuthRepository
-): ViewModel() {
+) : ViewModel() {
 
     private val _state = MutableStateFlow<SignInState>(SignInState.Idle)
     val state: StateFlow<SignInState> = _state.asStateFlow()
