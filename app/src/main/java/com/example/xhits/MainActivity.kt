@@ -79,10 +79,14 @@ class MainActivity : AppCompatActivity() {
                     )
                 ) { backStackEntry ->
                     val code = backStackEntry.arguments?.getString("code")
+                    val state by signInViewModel.state.collectAsState()
 
                     LaunchedEffect(code) {
                         code?.let { signInViewModel.dispatchIntent(SignInIntent.GoogleAuthCodeReceived(it)) }
-                        if (signInViewModel.state.value is SignInState.Success) {
+                    }
+
+                    LaunchedEffect(state) {
+                        if (state is SignInState.Success) {
                             navController.navigate("home") {
                                 popUpTo("sign_in") { inclusive = true }
                             }

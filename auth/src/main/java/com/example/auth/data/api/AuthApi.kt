@@ -6,14 +6,12 @@ import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.POST
 
-data class GoogleAuthUrlResponse(val url: String)
-
 interface AuthApi {
 
-    @GET("oauth/google/url")
-    suspend fun getGoogleOAuthUri(): GoogleAuthUrlResponse
+    @GET("1/auth/google/start")
+    suspend fun getGoogleOAuthUri(): Response<Unit>
 
-    @POST("oauth/google/exchange")
+    @POST("1/auth/code/exchange")
     @FormUrlEncoded
     suspend fun exchangeCode(@Field("code") code: String): Response<Unit>
 }

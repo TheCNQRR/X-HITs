@@ -1,6 +1,7 @@
 package com.example.auth.presentation.signin
 
 import android.content.Intent
+import android.widget.Toast
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
@@ -83,6 +84,12 @@ fun SignInScreen(
                     context.startActivity(intent)
                 }
             }
+        }
+    }
+
+    LaunchedEffect(state) {
+        if (state is SignInState.Error) {
+            Toast.makeText(context, state.message, Toast.LENGTH_LONG).show()
         }
     }
 

@@ -8,7 +8,17 @@ class AuthRepositoryImpl @Inject constructor(
     private val api: AuthApi
 ): AuthRepository {
 
-    override suspend fun startGoogleAuth(): String = api.getGoogleOAuthUri().url
+    override suspend fun startGoogleAuth(): String {
+        val response = api.getGoogleOAuthUri()
+
+        val redirectUrl = response.headers()["Location"]
+
+        if (!redirectUrl.isNullOrEmpty()) {
+            return redirectUrl
+        } else {
+            throw Exception("No Location header found in response")
+        }
+    }
 
     override suspend fun exchangeCode(code: String): Boolean {
         val response = api.exchangeCode(code)
