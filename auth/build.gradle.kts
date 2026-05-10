@@ -53,6 +53,7 @@ dependencies {
     implementation(libs.androidx.material3.android)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.runtime.android)
+    implementation(libs.okhttp3)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
