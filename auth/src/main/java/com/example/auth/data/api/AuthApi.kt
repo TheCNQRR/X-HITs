@@ -1,8 +1,8 @@
 package com.example.auth.data.api
 
+import com.example.auth.data.model.ExchangeCodeRequest
 import retrofit2.Response
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
+import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 
@@ -12,6 +12,5 @@ interface AuthApi {
     suspend fun getGoogleOAuthUri(): Response<Unit>
 
     @POST("1/auth/code/exchange")
-    @FormUrlEncoded
-    suspend fun exchangeCode(@Field("code") code: String): Response<Unit>
+    suspend fun exchangeCode(@Body request: ExchangeCodeRequest): Response<Unit>
 }

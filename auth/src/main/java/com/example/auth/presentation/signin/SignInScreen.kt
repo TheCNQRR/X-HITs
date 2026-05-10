@@ -199,7 +199,7 @@ fun SignInScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 70.dp, end = 70.dp)
+                    .padding(start = 16.dp, end = 16.dp)
                     .clickable(
                         interactionSource = interactionSource,
                         indication = null

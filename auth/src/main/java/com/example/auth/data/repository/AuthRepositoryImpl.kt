@@ -1,6 +1,7 @@
 package com.example.auth.data.repository
 
 import com.example.auth.data.api.AuthApi
+import com.example.auth.data.model.ExchangeCodeRequest
 import com.example.auth.domain.repository.AuthRepository
 import javax.inject.Inject
 
@@ -21,7 +22,9 @@ class AuthRepositoryImpl @Inject constructor(
     }
 
     override suspend fun exchangeCode(code: String): Boolean {
-        val response = api.exchangeCode(code)
+        val request = ExchangeCodeRequest(code)
+
+        val response = api.exchangeCode(request)
         if (!response.isSuccessful) throw Exception("Exchange code failed")
 
         return true
