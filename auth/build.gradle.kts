@@ -1,28 +1,22 @@
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.compose.compiler)
-    alias(libs.plugins.dagger.hilt.android)
     alias(libs.plugins.ksp)
 }
 
 android {
-    namespace = "com.example.xhits"
-    compileSdk = 36
+    namespace = "com.example.auth"
+    compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.xhits"
         minSdk = 28
-        targetSdk = 35
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildFeatures {
-        viewBinding = true
         compose = true
     }
 
@@ -35,35 +29,39 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+
     kotlinOptions {
         jvmTarget = "17"
+    }
+
+    lint {
+        disable.add("ComposeMagicNumber")
     }
 }
 
 dependencies {
 
-    implementation(projects.auth)
+    implementation(projects.core.ui)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
-    implementation(libs.lifecycle.viewmodel.compose)
     implementation(libs.material)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.material3.android)
     implementation(libs.androidx.compose.ui)
-    implementation(libs.androidx.activity)
-    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.runtime.android)
     implementation(libs.retrofit2)
     implementation(libs.gson)
-    implementation(libs.kotlin.serializationJson)
-    implementation(libs.kotlin.serializationCore)
-    implementation(libs.androidx.activity.compose)
-    implementation(libs.androidx.constraintlayout)
+    implementation(libs.lifecycle.viewmodel.compose)
+    implementation(libs.logging.interceptor)
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.browser)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
