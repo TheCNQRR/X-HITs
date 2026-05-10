@@ -38,6 +38,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.auth.R
+import com.example.auth.presentation.common.AuthTextField
 import com.example.auth.presentation.signin.theme.InterFontFamily
 import com.example.core.ui.effects.CustomButton
 
