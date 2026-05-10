@@ -1,5 +1,6 @@
 package com.example.auth.presentation.signin
 
+import android.content.Intent
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
@@ -22,6 +23,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -29,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -37,6 +40,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.net.toUri
 import com.example.auth.R
 import com.example.auth.presentation.common.AuthTextField
 import com.example.auth.presentation.signin.theme.InterFontFamily
@@ -47,8 +51,11 @@ private const val ANIMATION_DURATION = 100
 @Composable
 fun SignInScreen(
     state: SignInState,
-    onIntent: (SignInIntent) -> Unit
+    onIntent: (SignInIntent) -> Unit,
+    viewModel: SignInViewModel
 ) {
+    val context = LocalContext.current
+
     val emailState = rememberTextFieldState()
     val passwordState = rememberTextFieldState()
 
@@ -67,6 +74,17 @@ fun SignInScreen(
         targetValue = if (isForgotPressed) 0.2f else 0.5f,
         animationSpec = tween(ANIMATION_DURATION)
     )
+
+    LaunchedEffect(Unit) {
+        viewModel.uiEvent.collect { event ->
+            when (event) {
+                is UiEvent.OpenCustomTab -> {
+                    val intent = Intent(Intent.ACTION_VIEW, event.uri.toUri())
+                    context.startActivity(intent)
+                }
+            }
+        }
+    }
 
     Box(
         modifier = Modifier

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.auth.domain.repository.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,8 +17,9 @@ class SignInViewModel @Inject constructor(
 ): ViewModel() {
 
     private val _state = MutableStateFlow<SignInState>(SignInState.Idle)
-
     val state: StateFlow<SignInState> = _state.asStateFlow()
+
+    val uiEvent = MutableSharedFlow<UiEvent>()
 
     fun dispatchIntent(intent: SignInIntent) {
         when (intent) {
@@ -34,8 +36,9 @@ class SignInViewModel @Inject constructor(
 
             runCatching {
                 authRepository.startGoogleAuth()
-            }.onSuccess {
-                _state.value = SignInState.Success
+            }.onSuccess { url ->
+                _state.value = SignInState.Idle
+                uiEvent.emit(UiEvent.OpenCustomTab(url))
             }.onFailure {
                 _state.value = SignInState.Error(message = "Failed to open Google auth")
             }

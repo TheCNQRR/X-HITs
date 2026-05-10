@@ -30,7 +30,7 @@ converterGson = "2.9.0"
 loggingInterceptor = "4.12.0"
 kotlinxCoroutinesAndroid = "1.10.2"
 browser = "1.8.0"
-daggerHiltAndroid = "2.57.1"
+daggerHiltAndroid = "2.56.1"
 ksp = "2.0.21-1.0.28"
 lifecycleViewmodelCompose = "2.10.0"
 

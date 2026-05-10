@@ -5,6 +5,7 @@ import android.view.WindowManager
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.material3.Text
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -19,8 +20,11 @@ import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import com.example.auth.presentation.signin.SignInIntent
 import com.example.auth.presentation.signin.SignInScreen
+import com.example.auth.presentation.signin.SignInState
 import com.example.auth.presentation.signin.SignInViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private val signInViewModel: SignInViewModel by viewModels()
@@ -53,7 +57,8 @@ class MainActivity : AppCompatActivity() {
 
                     SignInScreen(
                         state = state,
-                        onIntent = signInViewModel::dispatchIntent
+                        onIntent = signInViewModel::dispatchIntent,
+                        viewModel = signInViewModel
                     )
                 }
 
@@ -77,7 +82,16 @@ class MainActivity : AppCompatActivity() {
 
                     LaunchedEffect(code) {
                         code?.let { signInViewModel.dispatchIntent(SignInIntent.GoogleAuthCodeReceived(it)) }
+                        if (signInViewModel.state.value is SignInState.Success) {
+                            navController.navigate("home") {
+                                popUpTo("sign_in") { inclusive = true }
+                            }
+                        }
                     }
+                }
+
+                composable("home") {
+                    Text("Welcome Home!")
                 }
             }
         }

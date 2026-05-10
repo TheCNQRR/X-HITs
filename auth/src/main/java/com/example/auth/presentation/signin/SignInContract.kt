@@ -17,3 +17,7 @@ sealed interface SignInState {
 
     data class Error(val message: String): SignInState
 }
+
+sealed interface UiEvent {
+    data class OpenCustomTab(val uri: String): UiEvent
+}

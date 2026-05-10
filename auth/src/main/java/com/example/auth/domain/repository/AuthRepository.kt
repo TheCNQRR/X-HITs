@@ -2,7 +2,7 @@ package com.example.auth.domain.repository
 
 interface AuthRepository {
 
-    suspend fun startGoogleAuth()
+    suspend fun startGoogleAuth(): String
 
-    suspend fun exchangeCode(code: String?): Result<Unit>
+    suspend fun exchangeCode(code: String): Boolean
 }

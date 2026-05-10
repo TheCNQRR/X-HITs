@@ -22,7 +22,7 @@ object RetrofitModule {
     @Provides
     @Singleton
     fun provideRetrofit(client: OkHttpClient): Retrofit = Retrofit.Builder()
-        .baseUrl("http://msk-w2xx4pwpx7.tail89cf13.ts.net:8080/api")
+        .baseUrl("http://msk-w2xx4pwpx7.tail89cf13.ts.net:8080/api/")
         .client(client)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
