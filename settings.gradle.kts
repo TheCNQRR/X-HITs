@@ -23,3 +23,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "X-HITs"
 include(":app")
+include(":auth")
+include(":core:ui")
