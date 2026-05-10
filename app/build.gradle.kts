@@ -58,6 +58,8 @@ dependencies {
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.retrofit2)
+    implementation(libs.gson)
     implementation(libs.kotlin.serializationJson)
     implementation(libs.kotlin.serializationCore)
     implementation(libs.androidx.activity.compose)
