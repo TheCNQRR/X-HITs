@@ -24,6 +24,7 @@ class SignInViewModel @Inject constructor(
             SignInIntent.ContinueWithGoogleClicked -> {
                 continueWithGoogle()
             }
+            is SignInIntent.GoogleAuthCodeReceived -> exchangeCode(intent.code)
         }
     }
 
@@ -38,6 +39,21 @@ class SignInViewModel @Inject constructor(
             }.onFailure {
                 _state.value = SignInState.Error(message = "Failed to open Google auth")
             }
+        }
+    }
+
+    private fun exchangeCode(code: String) {
+        viewModelScope.launch {
+            _state.value = SignInState.Loading
+
+            val result = runCatching {
+                authRepository.exchangeCode(code)
+            }
+
+            _state.value = result.fold(
+                onSuccess = { SignInState.Success },
+                onFailure = { SignInState.Error(it.localizedMessage ?: "Unknown error") }
+            )
         }
     }
 }
