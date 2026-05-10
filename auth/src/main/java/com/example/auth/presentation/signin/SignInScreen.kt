@@ -45,7 +45,10 @@ import com.example.core.ui.effects.CustomButton
 private const val ANIMATION_DURATION = 100
 
 @Composable
-fun SignInScreen() {
+fun SignInScreen(
+    state: SignInState,
+    onIntent: (SignInIntent) -> Unit
+) {
     val emailState = rememberTextFieldState()
     val passwordState = rememberTextFieldState()
 
@@ -175,7 +178,7 @@ fun SignInScreen() {
                     .clickable(
                         interactionSource = interactionSource,
                         indication = null
-                    ) { },
+                    ) { onIntent(SignInIntent.ContinueWithGoogleClicked) },
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {

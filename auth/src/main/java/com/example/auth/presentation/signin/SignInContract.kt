@@ -7,11 +7,11 @@ sealed interface SignInIntent {
 
 sealed interface SignInState {
 
-    data object Idle: SignInIntent
+    data object Idle: SignInState
 
-    data object Loading: SignInIntent
+    data object Loading: SignInState
 
-    data object Success: SignInIntent
+    data object Success: SignInState
 
-    data class Error(val message: String): SignInIntent
+    data class Error(val message: String): SignInState
 }
